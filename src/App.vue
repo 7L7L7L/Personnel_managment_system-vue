@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-   
-   <router-view />
-</div>
+
+    <router-view />
+  </div>
 </template>
 
 <script>
@@ -14,6 +14,19 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
 
+* {
+  box-sizing: border-box;
+}
+
+#app {
+  height: 100%;
+}
 </style>
