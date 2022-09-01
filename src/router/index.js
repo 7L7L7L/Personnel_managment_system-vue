@@ -5,10 +5,12 @@ import login from '../components/login.vue'
 import home from '../components/home.vue'
 import list from '../views/user/list.vue'
 import profile from '../views/user/profile.vue'
+import notfound from '../views/notFound.vue'
 //安装路由
 Vue.use(router);
 //配置导出路由
 export default new router({
+    mode:'history',
     routes:[
         {
             name:'register',
@@ -26,7 +28,7 @@ export default new router({
             component: home,
             children:[
                 {
-                    path:"/user/list",
+                    path:"/employeeManagement/getList",
             component: list
                 },
                 {
@@ -34,6 +36,11 @@ export default new router({
             component: profile
                 }
             ]
+        },
+        {
+            name:'notfound',
+            path:'*',
+            component:notfound
         }
     ]
 

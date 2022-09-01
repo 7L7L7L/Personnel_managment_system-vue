@@ -12,7 +12,7 @@
                 </el-menu-item>
                 <el-menu-item index="1-2">
                 <!--插入的地方-->
-                  <router-link to="/user/list">用户列表</router-link>
+                  <router-link to="/employeeManagement/getList">用户列表</router-link>
                 </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
