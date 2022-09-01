@@ -85,7 +85,7 @@
       -moz-border-radius: 5px;
       box-shadow: 0 0 25px #909399;
       #register{
-        color: #000;
+        color: #606266 !important;
       }
     }
   
