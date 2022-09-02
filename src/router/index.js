@@ -10,37 +10,37 @@ import notfound from '../views/notFound.vue'
 Vue.use(router);
 //配置导出路由
 export default new router({
-    mode:'history',
-    routes:[
+    mode: 'history',
+    routes: [
         {
-            name:'register',
-            path:'/register',
-            component : register
+            name: 'register',
+            path: '/register',
+            component: register
         },
         {
-            name:'login',
-            path:"/",
+            name: 'login',
+            path: "/",
             component: login
         },
         {
-            name:'home',
-            path:'/home',
+            name: 'home',
+            path: '/home',
             component: home,
-            children:[
+            children: [
                 {
-                    path:"/employeeManagement/getList",
-            component: list
+                    path: "/employeeManagement/getList",
+                    component: list
                 },
                 {
-                    path:"/user/profile",
-            component: profile
+                    path: "/user/profile",
+                    component: profile
                 }
             ]
         },
         {
-            name:'notfound',
-            path:'*',
-            component:notfound
+            name: 'notfound',
+            path: '*',
+            component: notfound
         }
     ]
 

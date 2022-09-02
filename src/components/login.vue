@@ -25,6 +25,7 @@
   </div>
 </template>
   <script>
+import { login } from '@/api/user'
 export default {
   name: "Login",
   data() {
@@ -51,8 +52,17 @@ export default {
       //为表单绑定验证功能
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          //使用vue-router路由到指定页面，该方式称之为编程式导航
-          this.$router.push("/home");
+          //  console.log(this.form)
+          login(this.form).then((res) => {
+            if (res.code == 200) {
+              this.$router.push("/home");
+              this.$message.success("登录成功");
+            } else {
+              this.$message.error(res.msg);
+            }
+          }).catch(function (error) {
+            console.log(res.msg)
+          });
         } else {
           this.dialogVisible = true;
           return false;
