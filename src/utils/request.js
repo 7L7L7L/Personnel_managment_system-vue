@@ -8,7 +8,7 @@ const messageOnce = new domMessage()
 // 创建axios实例对象
 const service = axios.create({
     //配置请求根地址
-  baseURL: '/api',
+  baseURL: http,
   timeout: 10000 * 30 // request timeout
 })
 // 请求拦截器

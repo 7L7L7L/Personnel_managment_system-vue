@@ -51,14 +51,25 @@
         <el-form-item label="地址" prop="employeeAddress">
           <el-input v-model="formInfo.employeeAddress" placeholder="请输入地址"></el-input>
         </el-form-item>
-        <el-form-item label="文件图片" prop="images">
-          <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/"
-            :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+        <el-form-item label="图片" prop="imagesUrl">
+          <!-- <el-button type="primary" @click="getpicture">确定</el-button>-->
+          <img  :src="formInfo.imagesUrl" class="avatar"> 
+        </el-form-item>
+        <el-form-item label="文件图片" prop="upImages">
+          <el-upload class="avatar-uploader" action="/api/employeeManagement/upload"
+            :show-file-list="false" 
+            name="file"
+            :on-success="handleAvatarSuccess" 
+            :before-upload="beforeAvatarUpload"
+            >
+            <img v-if="upImageUrl" :src="upImageUrl" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
+
       </el-form>
+      
+
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="submitForm('formName')">确定</el-button>
@@ -66,8 +77,6 @@
     </el-dialog>
     <el-dialog :visible.sync="check" width="25%" :show-close="false" :close-on-click-modal="false"
       :close-on-press-escape="false">
-
-
       <el-form :model="personInfo" ref="personInfo" label-position="top">
         <el-form-item label="姓名" prop="employeeName">
           {{ personInfo.employeeName }}
@@ -75,11 +84,18 @@
         <el-form-item label="性别" prop="employeeSex">
           {{ personInfo.employeeSex }}
         </el-form-item>
+        <el-form-item label="部门" prop="departmentName">
+          {{ personInfo.departmentName }}
+        </el-form-item>
         <el-form-item label="电话号" prop="employeeTelephone">
           {{ personInfo.employeeTelephone }}
         </el-form-item>
         <el-form-item label="地址" prop="employeeAddress">
           {{ personInfo.employeeAddress }}
+        </el-form-item>
+        <el-form-item label="图片" prop="pictureUrl">
+          <!-- <el-button type="primary" @click="getpicture">确定</el-button>-->
+          <img  :src="personInfo.pictureUrl" class="avatar"> 
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -104,25 +120,34 @@ export default
           employeeSex: "",
           employeeTelephone: "",
           employeeAddress: "",
-          images: ""
+          imagesUrl: "",
+          employeeImageAddress:"",
+          departmentName:""
         },
         personInfo: {
           employeeName: "",
           employeeSex: "",
           employeeTelephone: "",
           employeeAddress: "",
+          pictureUrl:'',
+          departmentName:""
         },
         rules: {
           employeeName: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
           employeeSex: [{ required: true, message: '请选择性别', trigger: 'change' }],
         },
         imagFileList: [],
-        imageUrl: ''
+        upImageUrl: ''
       }
     },
 
     mounted() {
       this.getData()
+    //   if (location.href.indexOf("#reloaded")<=0) {
+    //   location.href = location.href + "#reloaded"+"#reloaded";
+    //   location.reload();
+    // }
+
     },
 
     methods: {
@@ -144,6 +169,7 @@ export default
 
         })
       },
+      //图片
       handleDelete(data) {
         deleteEmployee(data).then(res => {
           if (res.code == 200) {
@@ -155,20 +181,21 @@ export default
 
         })
       },
-      handleAvatarSuccess(res, file) {
-        this.imageUrl = URL.createObjectURL(file.raw);
+      handleAvatarSuccess(res) {
+        this.upImageUrl = http+'/image/'+res.data;
+       this.formInfo.employeeImageAddress=res.data;
       },
       beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
+        const isJPG = file.type == "image/png" ||file.type === 'image/jpeg';
+        const isLt10M = file.size / 1024 / 1024 < 10;
 
         if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
+          this.$message.error('上传头像图片只能是 JPG,PNG 格式!');
         }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
+        if (!isLt10M) {
+          this.$message.error('上传头像图片大小不能超过 10MB!');
         }
-        return isJPG && isLt2M;
+        return isJPG && isLt10M;
       },
       //添加
       handleAdd() {
@@ -178,6 +205,7 @@ export default
           employeeSex: "",
           employeeTelephone: "",
           employeeAddress: "",
+          pictureUrl:"",
         }
         this.dialogVisible = true;
       },
@@ -190,7 +218,9 @@ export default
           employeeName: item.employeeName,
           employeeSex: item.employeeSex,
           employeeAddress: item.employeeAddress,
+          imagesUrl:http+'/image/'+item.employeeImageAddress,
         }
+        
         this.dialogVisible = true;
 
       },
@@ -201,7 +231,9 @@ export default
           employeeName: item.employeeName,
           employeeSex: item.employeeSex,
           employeeAddress: item.employeeAddress,
+          pictureUrl:http+'/image/'+item.employeeImageAddress,
         }
+        console.log(this.personInfo)
         this.check = true;
       },
       submitForm(formName) {
@@ -214,8 +246,10 @@ export default
               if (this.formInfo.employeeSex === 2) {
                 this.formInfo.employeeSex = "女";
               }
+              console.log("提交后:"+this.formInfo.employeeImageAddress)
               updateEmployee(this.formInfo).then(res => {
                 if (res.code == 200) {
+                  location.reload();
                   this.getData();
                   this.$message.success("编辑成功");
                 } else {
@@ -232,6 +266,7 @@ export default
               }
               addOne(this.formInfo).then(res => {
                 if (res.code == 200) {
+                  location.reload();
                   this.getData();
                   this.$message.success("添加成功");
                 } else {
