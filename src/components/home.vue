@@ -4,22 +4,22 @@
       <el-aside width="200px">
         <el-menu :default-openeds="['1']">
           <el-submenu index="1">
-            <template slot="title"><i class="el-icon-caret-right"></i>用户管理</template>
+            <template slot="title"><i class="el-icon-user-solid"></i>部门管理</template>
             <el-menu-item-group>
               <el-menu-item index="1-1">
                 <!--插入的地方-->
-                <router-link to="/user/profile">个人信息</router-link>
+                <router-link to="/departmentManagement/getList">部门列表</router-link>
               </el-menu-item>
               <el-menu-item index="1-2">
                 <!--插入的地方-->
-                <router-link to="/employeeManagement/getList">用户列表</router-link>
+                <router-link to="/employeeManagement/getList">员工列表</router-link>
               </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <el-submenu index="2">
-            <template slot="title"><i class="el-icon-caret-right"></i>内容管理</template>
+            <template slot="title"><i class="el-icon-s-management"></i>内容管理</template>
             <el-menu-item-group>
-              <el-menu-item index="2-1">分类管理</el-menu-item>
+              <el-menu-item index="2-1">休假管理</el-menu-item>
               <el-menu-item index="2-2">内容列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
@@ -32,7 +32,7 @@
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>
-                <router-link :underline="false" to="/user/profile">个人信息</router-link>
+                <el-button class="el-icon-thumb" @click="handleExit()">退出登录</el-button>
               </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -46,8 +46,19 @@
   </div>
 </template>
 <script>
+import router from '../router';
+
 export default {
-  name: "home"
+  name: "home",
+  methods:{
+    handleExit(){
+      sessionStorage.removeItem("jwt")
+      router.push({
+            path:"/"
+        })
+        this.$message.success("退出成功，欢迎下次使用");
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

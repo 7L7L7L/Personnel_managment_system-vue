@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 
-export function getList() {
+export function getEmployeeList() {
     return request({
         url: '/employeeManagement/getList',
         method: 'GET'

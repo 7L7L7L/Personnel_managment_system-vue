@@ -10,6 +10,11 @@
           <el-input type="password" placeholder=" 请输入密码" v-model="form.password" />
         </el-form-item>
         <el-form-item>
+          <el-switch v-model="isAdmin" active-color="#13ce66" active-text="是否管理员登录">
+          </el-switch>
+        </el-form-item>
+
+        <el-form-item>
           <el-button type="primary" v-on:click="onSubmit('loginForm')">登录</el-button>
           <el-button @click="register" id="register">注册</el-button>
         </el-form-item>
@@ -30,9 +35,11 @@ export default {
   name: "Login",
   data() {
     return {
+      isAdmin: false,
       form: {
         username: '',
-        password: ''
+        password: '',
+        isAdmin: 0
       },
       //表单验证，需要在el-form-item 元素中增加prop 属性
       rules: {
@@ -53,16 +60,36 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           //  console.log(this.form)
-          login(this.form).then((res) => {
-            if (res.code == 200) {
-              this.$router.push("/home");
-              this.$message.success("登录成功");
-            } else {
-              this.$message.error(res.msg);
-            }
-          }).catch(function (error) {
-            console.log(res.msg)
-          });
+          if (this.isAdmin) {
+            this.form.isAdmin = 1;
+           
+            login(this.form).then((res) => {
+              if (res.code == 200) {
+                sessionStorage.setItem("jwt", res.data)
+                this.$router.push("/home");
+                this.$message.success("登录成功");
+              } else {
+                this.$message.error(res.msg);
+              }
+            }).catch(function (error) {
+              console.log(res.msg)
+            });
+          } else {
+            this.form.isAdmin = 0;
+            
+            login(this.form).then((res) => {
+              if (res.code == 200) {
+                sessionStorage.setItem("jwt", res.data)
+                this.$router.push("/employeehome");
+                this.$message.success("登录成功");
+              } else {
+                this.$message.error(res.msg);
+              }
+            }).catch(function (error) {
+              console.log(res.msg)
+            });
+          }
+
         } else {
           this.dialogVisible = true;
           return false;
@@ -72,7 +99,8 @@ export default {
     register() {
       this.$router.push({ path: '/register' })
     },
-  }
+  },
+
 }
 </script>
 
