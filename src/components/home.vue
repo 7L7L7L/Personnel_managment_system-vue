@@ -19,7 +19,9 @@
           <el-submenu index="2">
             <template slot="title"><i class="el-icon-s-management"></i>内容管理</template>
             <el-menu-item-group>
-              <el-menu-item index="2-1">休假管理</el-menu-item>
+              <el-menu-item index="2-1">
+                <router-link to="/holidayManagement">请假列表</router-link>
+              </el-menu-item>
               <el-menu-item index="2-2">内容列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>

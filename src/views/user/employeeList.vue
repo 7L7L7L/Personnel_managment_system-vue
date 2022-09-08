@@ -98,7 +98,13 @@
     </el-dialog>
     <el-dialog :visible.sync="check" width="25%" :show-close="false" :close-on-click-modal="false"
       :close-on-press-escape="false">
+      
       <el-form :model="personInfo" ref="personInfo" label-position="top">
+        <el-form-item label="工号:" prop="uuid">
+          {{ personInfo.uuid }}
+
+        </el-form-item>
+        <el-divider></el-divider>
         <el-form-item label="姓名:" prop="employeeName">
           {{ personInfo.employeeName }}
 
@@ -274,6 +280,7 @@ export default
       handleCheck(item) {
         this.personInfo = {
           id: item.id,
+          uuid:item.uuid,
           employeeTelephone: item.employeeTelephone,
           employeeName: item.employeeName,
           employeeSex: item.employeeSex,
@@ -315,7 +322,7 @@ export default
                 if (res.code == 200) {
                   this.upImageUrl = '';
                   this.getData();
-                  this.$message.success("添加成功");
+                  this.$message.success(res.data);
                 } else {
                   this.$message.error(res.msg);
                 }

@@ -15,6 +15,10 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     let token = sessionStorage.getItem("jwt");
+    let id = sessionStorage.getItem("id");
+    if(id){
+      config.headers['id'] = id;
+    }
     // do something before request is sent
     if (token) {
       config.headers['Jwt'] = token;

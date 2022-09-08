@@ -8,6 +8,8 @@ import employeeList from '../views/user/employeeList.vue'
 import departmentList from '../views/user/departmentList.vue'
 import notfound from '../views/notFound.vue'
 import holidayManagement from '../views/user/holidayManagement.vue'
+import holidayEmpolyee from '../views/user/holidayEmpolyee.vue'
+import userProfile from '../views/user/userProfile.vue'
 //安装路由
 Vue.use(Router);
 //配置导出路由
@@ -35,6 +37,10 @@ const routes = [
             {
                 path: "/departmentManagement/getList",
                 component: departmentList
+            },
+            {
+                path:"/holidayManagement",
+                component:holidayManagement
             }
         ]
     },
@@ -44,8 +50,12 @@ const routes = [
         component: employeehome,
         children:[
             {
-                path:"/holidayManagement",
-                component:holidayManagement
+                path:"/holidayEmpolyee",
+                component: holidayEmpolyee
+            },
+            {
+                path:"/userProfile",
+                component:userProfile
             }
         ]
     },
@@ -79,10 +89,23 @@ router.beforeEach((to, from, next) => {
     } else {
         if (to.path === "/") {
             next();
-        } else {
+        } else 
+        if (to.path === "/register") {
+            next();
+        }else{
             next("/");
         }
 
     }
 })
+// 解决vue-router报NavigationDuplicated: Avoided redundant navigation to current location 的问题
+const originalPush = Router.prototype.push;
+Router.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err)
+};
+const originalReplace = Router.prototype.replace;
+Router.prototype.replace=function replace(location) {
+    return originalReplace.call(this,location).catch(err => err)
+};
+
 export default router;

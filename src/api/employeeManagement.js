@@ -28,3 +28,11 @@ export function addOne(data) {
         params: data
     })
 }
+
+export function getUuid(data) {
+    return request({
+        url: '/employeeManagement/getUuid/'+data,
+        method: 'GET',
+        params: data
+    })
+}

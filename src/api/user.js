@@ -23,3 +23,17 @@ export function updatePassword(data) {
         params: data
     })
 }
+export function userBind(id,uuid){
+    return request({
+        url: '/user/userBind/'+id+'/'+uuid,
+        method: 'POST',
+        params: id,uuid
+    })
+}
+export function getOneById(data){
+    return request({
+        url: '/user/getOneById/'+data,
+        method: 'GET',
+        params: data
+    })
+}

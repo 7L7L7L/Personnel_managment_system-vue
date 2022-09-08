@@ -64,8 +64,10 @@ export default {
             this.form.isAdmin = 1;
            
             login(this.form).then((res) => {
+              console.log(res)
               if (res.code == 200) {
-                sessionStorage.setItem("jwt", res.data)
+                sessionStorage.setItem("jwt",res.data.jwt)
+                sessionStorage.setItem("id",res.data.id)
                 this.$router.push("/home");
                 this.$message.success("登录成功");
               } else {
@@ -79,7 +81,8 @@ export default {
             
             login(this.form).then((res) => {
               if (res.code == 200) {
-                sessionStorage.setItem("jwt", res.data)
+                sessionStorage.setItem("jwt",res.data.jwt)
+                sessionStorage.setItem("id",res.data.id)
                 this.$router.push("/employeehome");
                 this.$message.success("登录成功");
               } else {
