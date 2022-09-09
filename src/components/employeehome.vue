@@ -1,40 +1,41 @@
 <template>
   <section>
     <div>
-
+      
       <el-container>
-        <el-aside width="200px">
-          <el-menu :default-openeds="['1']">
+        <el-aside width="200px" class="el-aside">
+          <el-col width="auto">
+          <el-menu :default-openeds="['1']"
+            default-active="2"
+          class="el-menu-vertical-demo"
+      @open="handleOpen"
+      @close="handleClose">
             <el-submenu index="1">
               <template slot="title"><i class="el-icon-user-solid"></i>功能列表</template>
               <el-menu-item-group>
                 <el-menu-item index="1-1">
-                  <!--插入的地方-->
+                  
                   <el-link type="primary" @click="toHoliday()">请假系统</el-link>
-                  <!-- <router-link to="/holidayEmpolyee">请假系统</router-link> -->
+                  
                 </el-menu-item>
                 <el-menu-item index="1-2">
-                  <!--插入的地方-->
+                 
                   <el-link type="success" @click="dialogVisible = true">工资系统</el-link>
-                  <!-- <router-link to="/employeeManagement/getList">工资系统</router-link> -->
+                  
                 </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
-            <el-submenu index="2">
-              <template slot="title"><i class="el-icon-s-management"></i>个人信息</template>
-              <el-menu-item-group>
-                <el-menu-item index="2-1">
-                  <el-link type="primary" @click="dialogVisible = true">查看个人信息</el-link>
-                </el-menu-item>
-                <el-menu-item index="2-2">内容列表</el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
+         
           </el-menu>
-
+        </el-col>
+     
         </el-aside>
 
         <el-container>
-          <el-header style="text-align: right; font-size: 12px">
+
+    
+
+          <el-header style="text-align: right; font-size: 12px" class="el-header">
             <el-dropdown>
               <el-button type="primary" class="el-icon-setting">
                 <i class="el-icon-arrow-down el-icon--right"></i>
@@ -44,7 +45,6 @@
                   <el-button class="el-icon-thumb" @click="handleExit()">退出登录</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-
                   <el-button class="el-icon-thumb" @click="dialogVisible = true">实名认证</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
@@ -141,6 +141,12 @@ export default {
         path: "/holidayEmpolyee"
       })
     },
+    handleOpen(key, keyPath) {
+        console.log(key, keyPath);
+      },
+      handleClose(key, keyPath) {
+        console.log(key, keyPath);
+      }
 
   }
 }
@@ -148,12 +154,18 @@ export default {
 <style scoped lang="scss">
 .el-header {
   background-color: #B3C0D1;
+  // #B3C0D1
   color: #333;
   line-height: 60px;
+}
+.el-menu-vertical-demo{
+  width: auto;
+  height: auto;
 }
 
 .el-aside {
   color: #333;
+  overflow: unset;
 }
 </style>
   

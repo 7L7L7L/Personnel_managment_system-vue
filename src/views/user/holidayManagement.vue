@@ -147,7 +147,7 @@ export default
         allowHoliday(data.id,this.allow).then(res=>{
           if (res.code == 200) {
           this.getData();
-          this.$message.success(res.msg);
+          this.$message.success("审批成功");
         } else {
           this.$message.error(res.msg);
         }

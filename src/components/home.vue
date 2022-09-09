@@ -1,18 +1,20 @@
 <template>
   <div>
     <el-container>
-      <el-aside width="200px">
-        <el-menu :default-openeds="['1']">
+      <el-aside width="200px" class="el-aside">
+        <el-menu :default-openeds="['1','2']">
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-user-solid"></i>部门管理</template>
             <el-menu-item-group>
               <el-menu-item index="1-1">
                 <!--插入的地方-->
-                <router-link to="/departmentManagement/getList">部门列表</router-link>
+            
+                <el-link type="primary" @click="toDepartmentManagement()">部门列表</el-link>
               </el-menu-item>
               <el-menu-item index="1-2">
                 <!--插入的地方-->
-                <router-link to="/employeeManagement/getList">员工列表</router-link>
+                
+                <el-link type="success" @click="toEmployeeManagement()">员工列表</el-link>
               </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
@@ -20,9 +22,12 @@
             <template slot="title"><i class="el-icon-s-management"></i>内容管理</template>
             <el-menu-item-group>
               <el-menu-item index="2-1">
-                <router-link to="/holidayManagement">请假列表</router-link>
+                <el-link type="warning" @click="toHolidayManagement()">请假列表</el-link>
               </el-menu-item>
-              <el-menu-item index="2-2">内容列表</el-menu-item>
+              <el-menu-item index="2-2">
+                <el-link type="danger" @click="toDolidayManagement()">工资列表</el-link>
+              </el-menu-item>
+              
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
@@ -59,7 +64,23 @@ export default {
             path:"/"
         })
         this.$message.success("退出成功，欢迎下次使用");
-    }
+    },
+    toDepartmentManagement() {
+      router.push({
+        path: "/departmentManagement/getList"
+      })
+    },
+    toEmployeeManagement() {
+      router.push({
+        path: "/employeeManagement/getList"
+      })
+    }, 
+    toHolidayManagement() {
+      router.push({
+        path: "/holidayManagement"
+      })
+    },
+    
   }
 }
 </script>
@@ -72,5 +93,6 @@ export default {
 
 .el-aside {
   color: #333;
+  overflow: unset;
 }
 </style>

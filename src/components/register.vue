@@ -9,25 +9,23 @@
           <el-input v-model="formData.username" placeholder="请输入用户名" clearable prefix-icon='el-icon-s-custom'>
           </el-input>
         </el-form-item>
-
-        <!-- <el-col :span="5">
-      <el-form-item label="" prop="register">
-        <el-button type="primary" icon="el-icon-plus" size="medium"> 注册 </el-button>
-      </el-form-item>
-    </el-col> -->
-
         <el-form-item label="密码" prop="password">
           <el-input v-model="formData.password" placeholder="请输入密码" clearable show-password></el-input>
         </el-form-item>
-
-
         <el-form-item label="确认密码" prop="spassword">
           <el-input v-model="formData.spassword" placeholder="请输入确认密码" clearable show-password></el-input>
         </el-form-item>
 
-        <el-form-item size="large">
-          <el-button type="primary" @click="submitForm">注册</el-button>
-          <el-button @click="resetForm">重置</el-button>
+        <el-form-item  class="button" label-width="0">
+          
+              <el-button type="success" @click="toLogin" class="el-icon-back" >返回登录</el-button>
+             
+          
+              <el-button type="primary" @click="submitForm" >注册</el-button>
+             
+              <el-button @click="resetForm" id="reset">重置</el-button>
+         
+          
         </el-form-item>
 
       </el-form>
@@ -37,6 +35,7 @@
 </template>
 <script>
   import {register} from'@/api/user'
+  import router from '../router';
 export default {
   components: {},
   props: [],
@@ -94,10 +93,38 @@ export default {
     resetForm() {
       this.$refs['loginForm'].resetFields()
     },
+    toLogin(){
+      router.push({
+        path:'/'
+      })
+    }
   }
 }
 
 </script>
 <style lang="scss" scoped>
 @import '../assets/css/login.scss';
+
+
+.button{
+
+  
+  #reset{
+  // width: 30%;
+  text-align: right;
+  #reset{
+    color: #606266 !important ;
+  }
+}
+#register{
+  // width: 30%;
+  text-align: center;
+  
+}
+#back{
+  width: 30%;
+  text-align: left;
+}
+}
+
 </style>

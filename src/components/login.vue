@@ -108,48 +108,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .main {
-//   background: url('../static/background.jpg') no-repeat;
-//   background-size: cover;
-//   height: 100%;
 
-//   .box-card {
-//     // height: 650px;
-//     width: 480px;
-//     position: relative;
-//     top: 50%;
-//     transform: translateY(-50%);
-//     margin: 0 auto 40px;
-//     background-image: url('../static/cardbackground.jpg');
-//     // background-color:aqua;
-//     // padding: 180px 0;
-
-//     .login-box {
-//       border: 1px solid #DCDFE6;
-//       width: 350px;
-//       // height: 100%;
-//       margin: 100px auto;
-//       padding: 35px 35px 15px 35px;
-//       border-radius: 5px;
-//       -webkit-border-radius: 5px;
-//       -moz-border-radius: 5px;
-//       box-shadow: 0 0 25px #909399;
-//       background-color: aliceblue;
-//       // position: relative;
-//       // top: 50%;
-//       // transform: translateY(-50%);
-//       #register {
-//         color: #606266 !important;
-//       }
-//     }
-
-//   }
-// }
-
-// .login-title {
-//   text-align: center;
-//   margin: 0 auto 40px auto;
-//   color: #303133;
-// }
 @import '../assets/css/login.scss';
 </style>
