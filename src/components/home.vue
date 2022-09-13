@@ -25,7 +25,7 @@
                 <el-link type="warning" @click="toHolidayManagement()">请假列表</el-link>
               </el-menu-item>
               <el-menu-item index="2-2">
-                <el-link type="danger" @click="toDolidayManagement()">工资列表</el-link>
+                <el-link type="danger" @click="toSalaryManagement()">工资列表</el-link>
               </el-menu-item>
               
             </el-menu-item-group>
@@ -34,15 +34,17 @@
       </el-aside>
 
       <el-container>
-        <el-header style="text-align: right; font-size: 12px">
-          <el-dropdown>
-            <i class="el-icon-setting" style="margin-right: 15px"></i>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>
-                <el-button class="el-icon-thumb" @click="handleExit()">退出登录</el-button>
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+        <el-header style="text-align: right; font-size: 12px" class="el-header">
+            <el-dropdown>
+              <el-button type="primary" class="el-icon-setting">
+                更多功能<i class="el-icon-arrow-down el-icon--right"></i>
+              </el-button>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>
+                  <el-button class="el-icon-thumb" @click="handleExit()">退出登录</el-button>
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
         </el-header>
         <el-main>
           <!--在这里展示视图-->
@@ -78,6 +80,11 @@ export default {
     toHolidayManagement() {
       router.push({
         path: "/holidayManagement"
+      })
+    },
+    toSalaryManagement() {
+      router.push({
+        path: "/salaryManagement"
       })
     },
     

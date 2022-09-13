@@ -9,6 +9,7 @@ import departmentList from '../views/user/departmentList.vue'
 import notfound from '../views/notFound.vue'
 import holidayManagement from '../views/user/holidayManagement.vue'
 import holidayEmpolyee from '../views/user/holidayEmpolyee.vue'
+import salaryManagement from '../views/user/salaryManagement.vue'
 import userProfile from '../views/user/userProfile.vue'
 //安装路由
 Vue.use(Router);
@@ -41,6 +42,9 @@ const routes = [
             {
                 path:"/holidayManagement",
                 component:holidayManagement
+            },{
+                path:"/salaryManagement",
+                component:salaryManagement
             }
         ]
     },

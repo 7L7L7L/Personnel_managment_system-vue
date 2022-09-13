@@ -1,44 +1,40 @@
 <template>
   <section>
     <div>
-      
+
       <el-container>
         <el-aside width="200px" class="el-aside">
-          <el-col width="auto">
-          <el-menu :default-openeds="['1']"
-            default-active="2"
-          class="el-menu-vertical-demo"
-      @open="handleOpen"
-      @close="handleClose">
+
+          <el-menu :default-openeds="['1']" default-active="2">
             <el-submenu index="1">
               <template slot="title"><i class="el-icon-user-solid"></i>功能列表</template>
               <el-menu-item-group>
                 <el-menu-item index="1-1">
-                  
+
                   <el-link type="primary" @click="toHoliday()">请假系统</el-link>
-                  
+
                 </el-menu-item>
                 <el-menu-item index="1-2">
-                 
+
                   <el-link type="success" @click="dialogVisible = true">工资系统</el-link>
-                  
+
                 </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
-         
+
           </el-menu>
-        </el-col>
-     
+
+
         </el-aside>
 
         <el-container>
 
-    
+
 
           <el-header style="text-align: right; font-size: 12px" class="el-header">
             <el-dropdown>
               <el-button type="primary" class="el-icon-setting">
-                <i class="el-icon-arrow-down el-icon--right"></i>
+                更多功能<i class="el-icon-arrow-down el-icon--right"></i>
               </el-button>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>
@@ -46,6 +42,9 @@
                 </el-dropdown-item>
                 <el-dropdown-item>
                   <el-button class="el-icon-thumb" @click="dialogVisible = true">实名认证</el-button>
+                </el-dropdown-item>
+                <el-dropdown-item>
+                  <el-button class="el-icon-thumb" @click="salaryDialogVisible = true">工资查询</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
@@ -72,6 +71,24 @@
         </span>
       </el-dialog>
 
+      <el-dialog title="工资表单" :visible.sync="salaryDialogVisible" width="25%">
+
+        <el-form :model="salaryInfo" ref="salaryForm" label-position="top">
+          <el-form-item label="您当月工资为:" prop="netSalary">
+           {{salaryInfo.netSalary}}
+          </el-form-item>
+          <el-form-item label="基础工资为:" prop="basePay">
+           {{salaryInfo.basePay}}
+          </el-form-item>
+          <el-form-item label="病事假:" prop="holiday">
+           {{salaryInfo.holiday}}
+          </el-form-item>
+
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="salaryDialogVisible = false">确 定</el-button>
+        </span>
+      </el-dialog>
     </div>
 
   </section>
@@ -80,22 +97,32 @@
 import router from '../router';
 import { getOneById, userBind, updatePassword } from '@/api/user'
 import { getUuid } from '@/api/employeeManagement'
+import { getOneSalary } from '@/api/salaryManagement'
 export default {
   name: "home",
   data() {
     return {
       dialogVisible: false,
+      salaryDialogVisible: false,
+      employeeId:"",
       userInfo: {
         uuid: "",
         id: "",
         password: "",
-        username: ""
+        username: "",
+        
       },
+      salaryInfo:{
+        basePay:"",
+        holiday:"",
+        netSalary:""
+      }
 
     }
   },
   mounted() {
     this.getData()
+    
   },
   methods: {
     getData() {
@@ -103,21 +130,29 @@ export default {
       getOneById(id).then(res => {
         if (res.code == 200) {
           this.userInfo = res.data
+          this.employeeId=res.data.employeeId
+          
           if (!this.userInfo.employeeId) {
             this.$message.success("请实名！")
           } else {
             getUuid(this.userInfo.employeeId).then(res => {
               this.userInfo.uuid = res.data
-
             })
           }
         } else {
           this.$message.error(res.msg)
         }
+        getOneSalary(this.employeeId).then(res=>{
+         this.salaryInfo=res.data
       })
-    },
-    handleBind(item) {
+      })
       
+     
+    },
+    
+   
+    handleBind(item) {
+
       userBind(item.id, item.uuid).then(res => {
         if (res.code == 200) {
           this.$message.success("实名成功")
@@ -125,7 +160,7 @@ export default {
           this.$message.success(res.msg)
         }
       })
-      this.dialogVisible =false
+      this.dialogVisible = false
 
 
     },
@@ -142,11 +177,11 @@ export default {
       })
     },
     handleOpen(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath);
-      }
+      console.log(key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
+    }
 
   }
 }
@@ -158,10 +193,7 @@ export default {
   color: #333;
   line-height: 60px;
 }
-.el-menu-vertical-demo{
-  width: auto;
-  height: auto;
-}
+
 
 .el-aside {
   color: #333;
