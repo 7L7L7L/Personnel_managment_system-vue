@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getHolidayForOne() {
     return request({
-        url: '/holidayManagement/getHolidayForOne/',
+        url: '/holidayManagement/getHolidayForOne',
         method: 'GET',
         
     })

@@ -1,105 +1,46 @@
 <template>
-  <div>
-    <el-container>
-      <el-aside width="200px" class="el-aside">
-        <el-menu :default-openeds="['1','2']">
-          <el-submenu index="1">
-            <template slot="title"><i class="el-icon-user-solid"></i>部门管理</template>
-            <el-menu-item-group>
-              <el-menu-item index="1-1">
-                <!--插入的地方-->
-            
-                <el-link type="primary" @click="toDepartmentManagement()">部门列表</el-link>
-              </el-menu-item>
-              <el-menu-item index="1-2">
-                <!--插入的地方-->
-                
-                <el-link type="success" @click="toEmployeeManagement()">员工列表</el-link>
-              </el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
-          <el-submenu index="2">
-            <template slot="title"><i class="el-icon-s-management"></i>内容管理</template>
-            <el-menu-item-group>
-              <el-menu-item index="2-1">
-                <el-link type="warning" @click="toHolidayManagement()">请假列表</el-link>
-              </el-menu-item>
-              <el-menu-item index="2-2">
-                <el-link type="danger" @click="toSalaryManagement()">工资列表</el-link>
-              </el-menu-item>
-              
-            </el-menu-item-group>
-          </el-submenu>
-        </el-menu>
-      </el-aside>
-
-      <el-container>
-        <el-header style="text-align: right; font-size: 12px" class="el-header">
-            <el-dropdown>
-              <el-button type="primary" class="el-icon-setting">
-                更多功能<i class="el-icon-arrow-down el-icon--right"></i>
-              </el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>
-                  <el-button class="el-icon-thumb" @click="handleExit()">退出登录</el-button>
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-        </el-header>
-        <el-main>
-          <!--在这里展示视图-->
-          <router-view />
-        </el-main>
-      </el-container>
-    </el-container>
-  </div>
-</template>
-<script>
-import router from '../router';
-
+   <el-carousel :interval="4000" type="card" height="500px" wigth="800px">
+    <el-carousel-item v-for="(item, index) in urls" :key="index">
+      <img v-bind:src="item.url" style="width: 100%;height: 100%"/>
+     
+    </el-carousel-item>
+  </el-carousel>
+  </template>
+  <script>
 export default {
-  name: "home",
-  methods:{
-    handleExit(){
-      sessionStorage.removeItem("jwt")
-      router.push({
-            path:"/"
-        })
-        this.$message.success("退出成功，欢迎下次使用");
-    },
-    toDepartmentManagement() {
-      router.push({
-        path: "/departmentManagement/getList"
-      })
-    },
-    toEmployeeManagement() {
-      router.push({
-        path: "/employeeManagement/getList"
-      })
-    }, 
-    toHolidayManagement() {
-      router.push({
-        path: "/holidayManagement"
-      })
-    },
-    toSalaryManagement() {
-      router.push({
-        path: "/salaryManagement"
-      })
-    },
-    
+    data(){
+      return{
+        urls:[
+         
+          {url:require('../static/buou.jpeg')},
+          {url:require('../static/keji.jpeg')},
+          {url:require('../static/mianyin.jpeg')},
+          {url:require('../static/dog.jpeg')},
+        ] 
+      }
+    }
   }
-}
-</script>
-<style scoped lang="scss">
-.el-header {
-  background-color: #B3C0D1;
-  color: #333;
-  line-height: 60px;
-}
-
-.el-aside {
-  color: #333;
-  overflow: unset;
-}
-</style>
+  </script>
+  
+  <style>
+   
+    
+    /* .el-carousel__item:nth-child(1) {
+      background-image:url('../static/dog.jpeg');
+      background-size:cover;
+    }
+    
+    .el-carousel__item:nth-child(2) {
+        background-image:url('../static/buou.jpeg');
+        background-size:cover;
+    }
+    .el-carousel__item:nth-child(3) {
+      background-image:url('../static/keji.jpeg');
+      background-size:cover;
+    }
+    
+    .el-carousel__item:nth-child(4) {
+        background-image:url('../static/mianyin.jpeg');
+        background-size:cover;
+    } */
+  </style>

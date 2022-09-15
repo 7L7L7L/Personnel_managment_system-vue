@@ -2,7 +2,7 @@
   <div class="main">
     <el-card class="box-card">
 
-      <el-form ref="loginForm" :model="formData" :rules="rules" size="medium" label-width="100px" class="login-box">
+      <el-form ref="formData" :model="formData" :rules="rules" size="medium" label-width="100px" class="login-box">
         <h3 class="login-title">注册</h3>
 
         <el-form-item label="用户名" prop="username">
@@ -23,7 +23,7 @@
           
               <el-button type="primary" @click="submitForm" >注册</el-button>
              
-              <el-button @click="resetForm" id="reset">重置</el-button>
+              <el-button @click="resetForm('formData')" id="reset">重置</el-button>
          
           
         </el-form-item>
@@ -40,12 +40,34 @@ export default {
   components: {},
   props: [],
   data() {
+    var validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入密码'));
+        } else {
+          if (this.formData.spassword !== '') {
+            this.$refs.formData.validateField('spassword');
+          }
+          if(value.length<6){
+            callback(new Error('请输入长度大于6的密码'));
+          }
+          callback();
+        }
+      }
+      var validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value !== this.formData.password) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      }
     return {
       formData: {
-        username: undefined,
-        register: undefined,
-        password: undefined,
-        spassword: undefined,
+        username: '',
+        register: '',
+        password: '',
+        spassword: '',
       },
       rules: {
         username: [{
@@ -55,12 +77,12 @@ export default {
         }],
         password: [{
           required: true,
-          message: '请输入密码',
+          validator: validatePass,
           trigger: 'blur'
         }],
         spassword: [{
           required: true,
-          message: '请输入确认密码',
+          validator: validatePass2,
           trigger: 'blur'
         }],
       },
@@ -69,7 +91,7 @@ export default {
 
   methods: {
     submitForm() {
-      this.$refs['loginForm'].validate(valid => {
+      this.$refs['formData'].validate(valid => {
         let check =true;
         if(this.formData.password!=this.formData.spassword){
           this.$message.error("两次密码不一致!");
@@ -90,8 +112,9 @@ export default {
         }
       })
     },
+   
     resetForm() {
-      this.$refs['loginForm'].resetFields()
+      this.$refs['formData'].resetFields()
     },
     toLogin(){
       router.push({

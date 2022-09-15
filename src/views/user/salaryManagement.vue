@@ -4,9 +4,12 @@
         <h1>工资列表</h1>
         <template>
             <el-row id="print">
-            <el-button icon="el-icon-plus" type="success" plain @click="handlePrint()">打印报表</el-button>
+            <el-button icon="el-icon-download" type="success" plain @click="handlePrint()">打印报表</el-button>
             </el-row>
           <el-table :data="tableData" style="width: 100%" :row-class-name="tableRowClassName">
+            <el-table-column prop="uuid" label="工号" align="center"  >
+            <template slot-scope="scope"  >{{ scope.row.uuid }}</template>
+          </el-table-column>
             <el-table-column prop="employeeName" label="员工姓名" align="center">
               <template slot-scope="scope">{{ scope.row.employeeName }}</template>
             </el-table-column>

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import register from '../components/register.vue'
 import login from '../components/login.vue'
 import home from '../components/home.vue'
+import managementhome from '../components/managementhome.vue'
 import employeehome from '../components/employeehome.vue'
 import employeeList from '../views/user/employeeList.vue'
 import departmentList from '../views/user/departmentList.vue'
@@ -10,7 +11,10 @@ import notfound from '../views/notFound.vue'
 import holidayManagement from '../views/user/holidayManagement.vue'
 import holidayEmpolyee from '../views/user/holidayEmpolyee.vue'
 import salaryManagement from '../views/user/salaryManagement.vue'
-import userProfile from '../views/user/userProfile.vue'
+import salaryEmployee from '../views/user/salaryEmployee.vue'
+import overtimeManagement from '../views/user/overtimeManagement.vue'
+import overtimeEmployee from '../views/user/overtimeEmployee.vue'
+
 //安装路由
 Vue.use(Router);
 //配置导出路由
@@ -26,10 +30,11 @@ const routes = [
         path: "/",
         component: login
     },
+    
     {
-        name: 'home',
-        path: '/home',
-        component: home,
+        name: 'managementhome',
+        path: '/managementhome',
+        component: managementhome,
         children: [
             {
                 path: "/employeeManagement/getList",
@@ -42,10 +47,21 @@ const routes = [
             {
                 path:"/holidayManagement",
                 component:holidayManagement
-            },{
+            },
+            {
+                path:"/overtimeManagement",
+                component:overtimeManagement
+            },
+            {
                 path:"/salaryManagement",
                 component:salaryManagement
-            }
+            },
+            {
+                name:'home',
+                path:'/managementhome/home',
+                component:home,
+              
+            },
         ]
     },
     {
@@ -58,9 +74,19 @@ const routes = [
                 component: holidayEmpolyee
             },
             {
-                path:"/userProfile",
-                component:userProfile
-            }
+                path:"/overtimeEmployee",
+                component: overtimeEmployee
+            },
+            {
+                path:"/salaryEmployee",
+                component:salaryEmployee
+            },
+            {
+                name:'home',
+                path:'/employeehome/home',
+                component:home,
+              
+            },
         ]
     },
     {
@@ -82,7 +108,7 @@ router.beforeEach((to, from, next) => {
     if (token) {
         if (to.path === "/") {
             if (login.isAdmin) {
-                next({ path: "/home" });
+                next({ path: "/managementhome" });
             } else {
                 next({ path: "/employeehome" });
             }
