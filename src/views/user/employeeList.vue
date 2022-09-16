@@ -144,6 +144,17 @@ import { getdepartmenList, getAllEmployeeManagement } from '@/api/departmentMana
 export default
   {
     data() {
+      var validatePhone = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入电话号'));
+        } else {
+          var isPhone = /^(((\d{3,4}-)?[0-9]{7,8})|(1(3|4|5|6|7|8|9)\d{9}))$/;
+          if(!isPhone.test(value)){
+            callback(new Error('请输入正确的电话号'));
+          }
+          callback();
+        }
+      }
       return {
         tableData: [],
         check: false,
@@ -173,6 +184,7 @@ export default
         rules: {
           employeeName: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
           employeeSex: [{ required: true, message: '请选择性别', trigger: 'change' }],
+          employeeTelephone:[{ required:true, validator: validatePhone,trigger: 'change'}]
         },
         imagFileList: [],
         upImageUrl: ''

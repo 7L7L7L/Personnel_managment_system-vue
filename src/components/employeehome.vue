@@ -242,8 +242,7 @@ export default {
       this.updateForm.oldPassword=''
       this.updateDialogVisible = false;
       },
-    },
-    handleExit() {
+      handleExit() {
       sessionStorage.removeItem("jwt")
       router.push({
         path: "/"
@@ -270,6 +269,8 @@ export default {
         path: "/overtimeEmployee"
       })
     },
+    },
+    
 
   }
 

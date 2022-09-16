@@ -6,7 +6,7 @@
 
 
 
-          <el-submenu index="2">
+          <el-submenu index="1">
             <template slot="title"><i class="el-icon-user-solid"></i>部门管理</template>
             <el-menu-item-group>
               <el-menu-item index="1-1">
