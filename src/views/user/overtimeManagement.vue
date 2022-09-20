@@ -1,7 +1,7 @@
 <template>
     <section>
       <div>
-        <h1>请假列表</h1>
+        <h1>加班列表</h1>
         <template>
           <el-table :data="tableData" style="width: 100%" :row-class-name="tableRowClassName">
             <el-table-column prop="employeeName" label="请假人" align="center">
